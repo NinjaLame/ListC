@@ -40,7 +40,7 @@ typedef struct{
         deklarasi variabel.
         address Elemen;
         cara biasa untuk mengakses info: Elemen->Info;
-        dengan makro: Info(P)
+        dengan makro: Info(Elemen)
 
     3. Perhatikan Spasi
         Benar => #define Info(P) (P)->Info
