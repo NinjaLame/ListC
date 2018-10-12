@@ -48,7 +48,7 @@ typedef struct{
 
 */
 #define Info(P) (P)->Info //P adalah variabel bertipe address
-#define Next (P) (P)->Next //Menggunakan panah karena address adalah pointer (cek typedef diatas)
+#define Next(P) (P)->Next //Menggunakan panah karena address adalah pointer (cek typedef diatas)
 #define First(L) (L).First //L adalah variabel bertipe List
 
 void createEmpty(List *L){
@@ -127,17 +127,17 @@ void delValFirst(List *L, infotype *X){
     }
 }
 
-void inserLast(List *L, address P) {
+void insertLast(List *L, address P) {
     /**                       Last Lama
          ________           _______________
         | First |________\ | Info    |Next |_____xxxxx______ Nil
-        |_______|        / |_________|_____|     
+        |_______|        / |_________|_____|
                                         \                  /
                                          \_______________ /
                                          | Info    |Next |
                                          |_________|_____| <-Last Baru
     */
-    
+
     address Last; //akan menunjuk last
     Last = First(*L); //Last diposisikan pada first
     while (Next(Last) != Nil) { //Luping mencari last
@@ -153,6 +153,26 @@ void insertVLast(List *L, infotype X) {
     if (P!=Nil) {
         insertLast(&(*L),P);
     }
+}
+
+void deleteLast(List *L, address *P) {
+    address Last, PrevLast;
+    Last = First(*L);
+    while(Next(Last)!=Nil){
+        PrevLast = Last;
+        Last = Next(Last);
+    }
+    Next(PrevLast) = Next(Last);
+    (*P) = Last;
+}
+
+void deleteVLast(List *L, infotype *X){
+    address P;
+    P = First (*L);
+    if(P!=Nil){
+        deleteLast(&(*L),&P);
+    }
+    (*X) = Info(P);
 }
 
 void printList(List L){
@@ -186,6 +206,9 @@ int main()
     printf("\n!!! Yang dihapus %d !!!\n",X);
 
     InserValFirst(&L1, 120);
+    deleteVLast(&L1,&X);
+    printf("\n!!! Yang dihapus %d !!!\n",X);
+    insertVLast(&L1,400);
     printList(L1);
     return 0;
 }
