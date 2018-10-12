@@ -127,6 +127,34 @@ void delValFirst(List *L, infotype *X){
     }
 }
 
+void inserLast(List *L, address P) {
+    /**                       Last Lama
+         ________           _______________
+        | First |________\ | Info    |Next |_____xxxxx______ Nil
+        |_______|        / |_________|_____|     
+                                        \                  /
+                                         \_______________ /
+                                         | Info    |Next |
+                                         |_________|_____| <-Last Baru
+    */
+    
+    address Last; //akan menunjuk last
+    Last = First(*L); //Last diposisikan pada first
+    while (Next(Last) != Nil) { //Luping mencari last
+        Last=Next(Last); //Last diganti dengan elemen setelahnya
+    }
+    Next(P) = Next(Last); //Next P menunjuk next last alias Nil
+    Next(Last) = P; //Next Last menunjuk P
+}
+
+void insertVLast(List *L, infotype X) {
+    address P;
+    P = Alokasi(X);
+    if (P!=Nil) {
+        insertLast(&(*L),P);
+    }
+}
+
 void printList(List L){
     address temp = First(L); //menampung elemen pertama
     while(temp!=Nil){ //jika elemen tidak kosong, looping berjalan
